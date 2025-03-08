@@ -7,10 +7,11 @@ public class SpawnerSample : MonoBehaviour
 
     void Start()
     {
-        spawnHealthPot(0);
-        spawnHealthPot(45);
-        spawnHealthPot(90);
-        spawnHealthPot(135);
+        LootAngle myLootAngle = new LootAngle(45);
+        spawnHealthPot(myLootAngle.NextAngle());
+        spawnHealthPot(myLootAngle.NextAngle());
+        spawnHealthPot(myLootAngle.NextAngle());
+        spawnHealthPot(myLootAngle.NextAngle());
     }
 
     void spawnHealthPot(int angle) {
@@ -20,4 +21,23 @@ public class SpawnerSample : MonoBehaviour
         Instantiate(ObjectToSpawn, spawnPosition, Quaternion.identity);
     }
 }
+
+public class LootAngle {
+    
+    int angle;
+    int step;
+
+    public LootAngle(int increment) {
+        step = increment;
+        angle = 0;
+    }
+    
+    public int NextAngle() {
+        int currAngle = angle;
+        angle = Helpers.WrapAngle(angle + step);
+
+        return currAngle;
+    }
+}
+
 
